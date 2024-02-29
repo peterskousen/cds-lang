@@ -1,0 +1,4 @@
+transformers
+tensorflow-cpu
+pandas
+spacy
