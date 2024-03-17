@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn import metrics
+import utils.classifier_utils as clf
 import matplotlib.pyplot as plt
 import mlp_classifier as mlp
 import lr_classifier as lrc
@@ -27,9 +28,9 @@ def get_program_args():
 
 def main():
     get_program_args()
+    args = get_program_args()
 
 if __name__=="__main__":
-    args = get_program_args()
     if args.classification_type == "nn":
         nn.eval_sentence(args.input_sentence)
     elif args.classification_type == "lrc":
