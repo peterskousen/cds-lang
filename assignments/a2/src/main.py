@@ -7,8 +7,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn import metrics
 import matplotlib.pyplot as plt
-import nn_classifier as nn
-import lrc_classifier as lrc
+import mlp_classifier as mlp
+import lr_classifier as lrc
 import argparse
 
 def get_program_args():
