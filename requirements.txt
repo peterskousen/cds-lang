@@ -1,2 +1,1 @@
-transformers
-tensorflow-cpu
+pandas==2.2.1

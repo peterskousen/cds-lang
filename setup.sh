@@ -1,10 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-# install hdbscan for BERTopic
-sudo apt-get update
-sudo apt-get install python3-dev
+# create virtual env
+python -m venv env
+
+#activate env
+source ./env/bin/activate
 
 # requirements
 pip install --upgrade pip
-pip install --upgrade nbformat
-python3 -m pip install -r requirements.txt
+pip install -r requirements.txt
+
+deactivate
