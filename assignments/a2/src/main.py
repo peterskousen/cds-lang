@@ -11,7 +11,6 @@ def get_program_args():
     )
     parser.add_argument('--train','-t',
                         help = "Specify whether or not to train model",
-                        default = False,
                         choices = ["y", "n"]
     )
     parser.add_argument('--input_sentence','-i',
@@ -29,5 +28,7 @@ if __name__== "__main__":
         mlp.train_mlp()
     elif args.classification_type == "mlp" and args.train == "n":
         mlp.eval_sentence(args.input_sentence)
-    elif args.classification_type == "lrc":
+    elif args.classification_type == "lrc" and args.train == "y":
+        lrc.train_lrc()
+    elif args.classification_type == "lrc" and args.train == "n":
         lrc.eval_sentence(args.input_sentence)

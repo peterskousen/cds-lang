@@ -56,8 +56,9 @@ def train_mlp():
                                                   cmap=plt.cm.Blues,
                                                   labels=["FAKE", "REAL"])
 
-    classifier_metrics = metrics.classification_report(y_test, y_pred)
-    print(classifier_metrics)
+    classifier_metrics = metrics.classification_report(y_test, y_pred, output_dict = True)
+    df = pd.DataFrame(classifier_metrics).transpose()
+    df.to_csv("../out/mlp_report.csv")
     
     plt.plot(classifier.loss_curve_)
     plt.title("Loss curve during training", fontsize=14)
