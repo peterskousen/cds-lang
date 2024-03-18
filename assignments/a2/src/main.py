@@ -1,37 +1,33 @@
-import os
-import sys
-import pandas as pd
-from sklearn.model_selection import train_test_split, ShuffleSplit
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.neural_network import MLPClassifier
-from sklearn import metrics
-import utils.classifier_utils as clf
-import matplotlib.pyplot as plt
 import mlp_classifier as mlp
 import lr_classifier as lrc
 import argparse
 
 def get_program_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--classification_type','-cl',
-                        required = True,
-                        help = "Type of classifier to execute"
+    parser.add_argument('--classification_type','-c',
+                        choices = ["mlp", "lrc"],
+                        help = "Type of classifier to execute",
+                        required = True
+    )
+    parser.add_argument('--train','-t',
+                        help = "Specify whether or not to train model",
+                        default = False,
+                        choices = ["y", "n"]
     )
     parser.add_argument('--input_sentence','-i',
                         help = "Input sentence to analyse",
-                        choices = ["nn", "lrc"],
-                        required = True,
                         type = str
     )
     return parser.parse_args()
 
 def main():
     get_program_args()
-    args = get_program_args()
 
-if __name__=="__main__":
-    if args.classification_type == "nn":
-        nn.eval_sentence(args.input_sentence)
+if __name__== "__main__":
+    args = get_program_args()
+    if args.classification_type == "mlp" and args.train == "y":
+        mlp.train_mlp()
+    elif args.classification_type == "mlp" and args.train == "n":
+        mlp.eval_sentence(args.input_sentence)
     elif args.classification_type == "lrc":
         lrc.eval_sentence(args.input_sentence)

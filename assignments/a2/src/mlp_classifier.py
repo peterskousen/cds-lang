@@ -1,4 +1,15 @@
-def initialize_mlp():
+import os
+import sys
+import pandas as pd
+from sklearn.model_selection import train_test_split, ShuffleSplit
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
+from sklearn import metrics
+import utils.classifier_utils as clf
+import matplotlib.pyplot as plt
+
+def train_mlp():
     filepath = os.path.join(
         "..",
         "..",
@@ -24,15 +35,21 @@ def initialize_mlp():
     X_train_feats = vectorizer.fit_transform(X_train)
     X_test_feats = vectorizer.transform(X_test)
     feature_names = vectorizer.get_feature_names_out()
+
     classifier = MLPClassifier(activation = "logistic", 
                                hidden_layer_sizes = (20,), max_iter=1000,
                                random_state = 42)
 
     classifier.fit(X_train_feats, y_train)
+
     y_pred = classifier.predict(X_test_feats)
     print(y_pred[:20])
 
-    # Evaluate model
+    from joblib import dump, load
+    dump(classifier, "../models/MLP_classifier.joblib")
+    dump(vectorizer, "../models/MLP_tfidf_vectorizer.joblib")
+
+    #Evaluate model
     metrics.ConfusionMatrixDisplay.from_estimator(classifier,
                                                   X_train_feats,
                                                   y_train,
@@ -48,15 +65,9 @@ def initialize_mlp():
     plt.ylabel('Loss score')
     plt.show()
 
-    from joblib import dump, load
-    dump(classifier, "../models/MLP_classifier.joblib")
-    dump(vectorizer, "../models/MLP_tfidf_vectorizer.joblib")
-
 def eval_sentence(sentence):
     from joblib import dump, load
     loaded_clf = load("../models/MLP_classifier.joblib")
     loaded_vect = load("../models/MLP_tfidf_vectorizer.joblib")
     test_sentence = loaded_vect.transform([sentence])
-    loaded_clf.predict(test_sentence)
-
-initialize_mlp()
+    print(loaded_clf.predict(test_sentence))

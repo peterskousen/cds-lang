@@ -1,29 +1,34 @@
-def initialize_lrc():
-    filepath = os.path.join(
-        "..",
-        "..",
-        "..",
-        "data",
-        "fake_or_real_news.csv"
-    )
-    data_csv = pd.read_csv(filepath, index_col=0)
+import vectorizer_script as v
+def train_lrc():
+    # filepath = os.path.join(
+    #     "..",
+    #     "..",
+    #     "..",
+    #     "data",
+    #     "fake_or_real_news.csv"
+    # )
+    # data_csv = pd.read_csv(filepath, index_col=0)
 
-    X = data_csv["text"]
-    y = data_csv["label"]
+    # X = data_csv["text"]
+    # y = data_csv["label"]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y,        
-                                                        test_size=0.2,  
-                                                        random_state=42)
-    vectorizer = TfidfVectorizer(ngram_range = (1,2),
-                                 lowercase =  True,
-                                 max_df = 0.95,
-                                 min_df = 0.05,
-                                 max_features = 100)
-    X_train_feats = vectorizer.fit_transform(X_train)
-    X_test_feats = vectorizer.transform(X_test)
-    feature_names = vectorizer.get_feature_names_out()
+    # X_train, X_test, y_train, y_test = train_test_split(X, y,        
+    #                                                     test_size=0.2,  
+    #                                                     random_state=42)
+   
+    # vectorizer = TfidfVectorizer(ngram_range = (1,2),
+    #                              lowercase =  True,
+    #                              max_df = 0.95,
+    #                              min_df = 0.05,
+    #                              max_features = 500)
+                                 
+    # X_train_feats = vectorizer.fit_transform(X_train)
+    # X_test_feats = vectorizer.transform(X_test)
+    # feature_names = vectorizer.get_feature_names_out()
+    v.vectorize()
 
     classifier = LogisticRegression(random_state=42).fit(X_train_feats, y_train)
+
     y_pred = classifier.predict(X_test_feats)
     print(y_pred[:20])
 
@@ -49,11 +54,11 @@ def initialize_lrc():
     #Save model
     from joblib import dump, load
     dump(classifier, "../models/LR_classifier.joblib")
-    dump(vectorizer, "../models/LR_tfidf_vectorizer.joblib")
+    dump(vectorizer, "../models/tfidf_vectorizer.joblib")
 
 def eval_sentence(sentence):
     from joblib import dump, load
     loaded_classifier = load("../models/LR_classifier.joblib")
-    loaded_vect = load("../models/LR_tfidf_vectorizer.joblib")
+    loaded_vect = load("../models/tfidf_vectorizer.joblib")
     test_sentence = loaded_vect.transform([sentence])
-    loaded_classifier.predict(test_sentence)
+    print(loaded_classifier.predict(test_sentence))
