@@ -1,32 +1,22 @@
 import argparse
-
-class Person:
-    species = "Homo sapiens"
-    def __init__(self, name):
-        self.name = name
-
-    def hello(self):
-        print("Hello, " + self.name)
-
-    def preferences(self):
-        print("I like Python!")
-
-
-
+from person import Person
 
 def argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--name", "-n",
-        type = str
+    parser.add_argument("--name", 
+                        "-n",
+                        type = str,
+                        required = True
+    )
+    parser.add_argument("--likes",
+                        "-l"
     )
     return parser.parse_args()
 
 
-
-
 def main():
-    person = Person(argument_parser().name)
+    args = argument_parser()
+    person = Person(args.name, args.likes)
     person.hello()
     person.preferences()
 

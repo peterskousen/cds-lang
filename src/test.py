@@ -1,7 +1,8 @@
-import pandas as pd
-
 def main():
-    print(pd.__version__)
+    i = 0
+    while True:
+        print(i)
+        i += 1
 
 if __name__ =="__main__":
     main()
