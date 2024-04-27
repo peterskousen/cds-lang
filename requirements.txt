@@ -1,1 +1,4 @@
-pandas==2.2.1
+sentencepiece
+tensorflow
+tf-keras
+transformers
