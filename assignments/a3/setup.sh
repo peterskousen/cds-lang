@@ -1,2 +1,3 @@
 pip install --upgrade pip
-python3 -m pip install -r requirements.txt
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
