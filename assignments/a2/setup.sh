@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-# install requirements
-pip install --upgrade pip
-python3 -m pip install -r requirements.txt
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt

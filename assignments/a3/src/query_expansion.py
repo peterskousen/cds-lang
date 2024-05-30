@@ -4,6 +4,7 @@ import pandas as pd
 import gensim
 import gensim.downloader as api
 import argparse
+from codecarbon import EmissionsTracker
 
 def load_model():
     print("Fetching model...")
@@ -48,7 +49,6 @@ def calculate_percentage(artist, artist_songs, similar_words, word):
         matching_songs = matching_songs[matching_songs['text'].str.contains(word, case=False)]
     percentage = (len(matching_songs) / len(artist_songs)) * 100
     print(f'{percentage:.2f}% of {artist}\'s songs contain the word "{word}" or similar')
-    return percentage
 
 def get_program_args():
     parser = argparse.ArgumentParser()
@@ -63,14 +63,43 @@ def get_program_args():
     return parser.parse_args()
 
 def main():
+    output_path = "out"
+    tracker = EmissionsTracker(project_name="Query expansion",
+                                experiment_id="query_expansion",
+                                output_dir=output_path,
+                                output_file="emissions.csv",
+                                measure_power_secs=5,
+                                log_level = "error")
+
     args = get_program_args()
     print(f"Word: {args.word}, Artist: {args.artist}")
+
+    task_name = "load model"
+    print(f"Starting task: {task_name}")
+    tracker.start_task(task_name)
     model = load_model()
+    load_model_emissions = tracker.stop_task()
+
+    task_name = "read and preprocess data"
+    print(f"Starting task: {task_name}")
+    tracker.start_task(task_name)
     data = initialize_data()
     data = clean_lyrics_data(data)
+    process_data_emissions = tracker.stop_task()
+
+    task_name = "apply model"
+    print(f"Starting task: {task_name}")
+    tracker.start_task(task_name)
     similar_words = expand_query(args.word, model)
+    model_emissions = tracker.stop_task()
+
+    task_name = "calculate percentage"
+    print(f"Starting task: {task_name}")
+    tracker.start_task(task_name)
     artist_songs = filter_by_artist(args.artist, data)
     calculate_percentage(args.artist, artist_songs, similar_words, args.word)
+    percentage_emissions = tracker.stop_task()
 
+    tracker.stop()
 if __name__== "__main__":
     main()

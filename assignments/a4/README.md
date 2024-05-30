@@ -1,51 +1,55 @@
-# Assignment 4 - Emotion analysis with pretrained language models
+# A4: Emotion Analysis with Pretrained Language Models
+## Overview
 
-Winter is... just finished, actually.
+## Table of Contents
 
-In class this week, we've seen how pretrained language models can be used for a range of tasks. In this assignment, we're going to use these models to perform some computational text analysis of some culturally significant data - scripts from the television show *Game of Thrones*. The scripts have been split into lines, with additional metadata showing who spoke each line, which episode that line comes from, and which season that episode belongs to.
+- [Repo Structure](#repo-structure)
+- [Data Source and Prerequisites](#data-source-and-prerequisites)
+- [Reproducing the Analysis](#reproducing-the-analysis)
+- [Key Points from the Outputs](#key-points-from-the-outputs)
+- [Discussion of Limitations and Possible Improvements](#discussion-of-limitations-and-possible-improvements)
 
-In this assignment, we are going to investigate whether the emotional profile of this show changed over the course of its seven series, and we want to know which characters exhibit the most extreme emotions.
+## Repo structure
 
-For this assignment, you should write code which does the following:
+```bash
 
-- Predict emotion scores for all lines in the data
-- For each season
-    - Plot the distribution of all emotion labels in that season
-- For each emotion label
-    - Plot the relative frequency of each emotion across all seasons
+```
 
-Finally, your repository should include a writtens summary and interpretation of what you think this analysis might being showing. You do not need to be a media studies expert here - just describe what you see and what that might mean in this context. EDIT: talk about trends in the data, possible limitations of our method, etc. Think analytically about what the results show
+## Data Source and Prerequisites
 
 
-## Starter code and data
+The main script was written and executed using ```Python v.1.89.1```. 
+For the processing and analysis of the data, the following packages were used:
 
-The data for this assignment can be found in the ```cds-lang-data``` folder on UCloud. The data itself comes from [this website](https://www.kaggle.com/datasets/albenft/game-of-thrones-script-all-seasons?select=Game_of_Thrones_Script.csv).
+```
 
-For this exercise, I recommend using the pretrained emotion classifier that we worked with in class. You can load this via HuggingFace using the following code:
+```
 
-```python
-classifier = pipeline("text-classification", 
-                      model="j-hartmann/emotion-english-distilroberta-base", 
-                      return_all_scores=True)
-```                      
+## Reproducing the Analysis:
 
-## Objective
+To reproduce the analysis, change directory to *a4* and run *run.sh* from the from the terminal:
+```bash
+cd a4
+bash run.sh
+``` 
+*run.sh* performs the following actions:
+1. Sets up a virtual environment called *.venv* in the root directory using ```venv```:
+    ```sh
+    python -m venv .venv
+    ```
+2. Activates the environment:
+    ```sh
+    source .venv/bin/activate
+    ```
+3. Fetches and installs required dependencies:
+    ```
+    pip install -r requirements.txt
+    ```
+4. Runs the main Python script:
+    ```
+    python src/emotion_analysis.py
+    ``` 
 
-This assignment is designed to test that you can:
+## Key Points from the Outputs:
 
-1. Make use of pretrained language models via HuggingFace;
-2. Extract meaningful structured information from unstructured text data;
-3. Interpret and contextualize these results from a cultural data science perspective.
-
-## Some notes
-
-- You'll need to make use of many of the tools you've learned this semester. This includes - but is not necessarily limited to - libraries such as ```pandas``` and ```matplotlib```.
-- You may need to think about how best to present your numbers. Are raw frequencies the best choice? Average? Relative frequencies? That's up to you.
-
-## Additional comments
-
-Your code should include functions that you have written wherever possible. Try to break your code down into smaller self-contained parts, rather than having it as one long set of instructions.
-
-For this assignment, you should submit your code *only* as ```.py``` script, *not* as Jupyter Notebooks.
-
-Lastly, remember to follow the repo structure which was discussed in class recently. The assignment on GitHub provides a schematic outline of how this should look.
+## Discussion of Limitations and Possible Steps to Improvement
