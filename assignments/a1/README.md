@@ -10,7 +10,6 @@ More specifically, the script extracts the relative frequency of different parts
 - [Repo Structure](#repo-structure)
 - [Data Source and Prerequisites](#data-source-and-prerequisites)
 - [Reproducing the Analysis](#reproducing-the-analysis)
-- [Key Points from the Outputs](#key-points-from-the-outputs)
 - [Discussion of Limitations and Possible Improvements](#discussion-of-limitations-and-possible-improvements)
 
 ## Repo structure
@@ -75,7 +74,7 @@ tqdm==4.66.4
 
 To reproduce the analysis, change directory to *a1* and run *run.sh* from the from the terminal:
 ```bash
-cd a1
+cd local_path/to/a1
 bash setup.sh
 ``` 
 *run.sh* performs the following actions:
