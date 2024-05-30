@@ -42,39 +42,20 @@ def append_labels(predictions, data):
     unique_labels = data['Label'].unique()
     return unique_labels
 
-'''
-def plot_distribution(data, labels):
-    # Plot the distribution for each season
-    seasons = sorted(data['Season'].unique())
-    max_frequency = 0  # Initialize maximum frequency
-    for season in seasons:
-        season_data = data[data['Season'] == season]
-        label_counts = season_data['Label'].value_counts().reindex(labels, fill_value=0)
-        max_frequency = max(max_frequency, label_counts.max())  # Update maximum frequency
-        label_counts.plot(kind='line', marker='o', figsize=(10, 6))
-        plt.title(f'Label distribution for Season {season}')
-        plt.xlabel('Label')
-        plt.ylabel('Frequency')
-        plt.xticks(rotation=45)
-        plt.ylim(0, max_frequency)  # Set y-axis limit to the maximum frequency
-        plt.grid(True)
-        plt.show()
-'''
-
 def plot_frequency_distribution(data, labels, path_out):
     label_counts_by_season = {season: {} for season in data['Season'].unique()}
 
-    # Accumulate label counts for each season
+    '''Accumulate label counts for each season'''
     for season, season_data in data.groupby('Season'):
         label_counts = season_data['Label'].value_counts().reindex(labels, fill_value=0)
         label_counts_by_season[season] = label_counts
 
-    # Convert dictionary to DataFrame for easier plotting
+    '''Convert dictionary to DataFrame for easier plotting'''
     label_counts_df = pd.DataFrame(label_counts_by_season, index=labels)
+    label_counts_df.to_csv(path_out)
 
-    # Plot the grouped bar plot
+    '''Plot the grouped bar plot'''
     label_counts_df.plot(kind='bar', figsize=(12, 8))
-
     plt.title('Distribution of labels for each Season')
     plt.xlabel('Label')
     plt.ylabel('Frequency')
@@ -86,24 +67,24 @@ def plot_frequency_distribution(data, labels, path_out):
     print(f'Plot saved as "Frequency distribution.png" to {path_out}')
 
 def plot_relative_freq(data, labels,path_out):
-    # Initialize an empty dictionary to store relative label frequencies for each season
+    '''Initialize an empty dictionary to store relative label frequencies for each season'''
     relative_frequencies_by_season = {}
     for season in data['Season'].unique():
         relative_frequencies_by_season[season] = []
 
-    # Calculate relative frequencies for each season
+    '''Calculate relative frequencies for each season'''
     for season, season_data in data.groupby('Season'):
         label_counts = season_data['Label'].value_counts().reindex(labels, fill_value=0)
         total_labels = label_counts.sum()
         relative_frequencies = label_counts / total_labels
         relative_frequencies_by_season[season] = relative_frequencies
 
-    # Convert dictionary to DataFrame for easier plotting
+    '''Convert dictionary to DataFrame for easier plotting'''
     relative_frequencies_df = pd.DataFrame(relative_frequencies_by_season, index=labels)
+    relative_frequencies_df.to_csv(path_out)
 
-    # Plot the grouped bar plot
+    '''Plot the grouped bar plot'''
     relative_frequencies_df.plot(kind='bar', figsize=(12, 8))
-
     plt.title('Relative frequency distribution of labels across Seasons')
     plt.xlabel('Label')
     plt.ylabel('Relative Frequency')

@@ -14,7 +14,7 @@ For this assignment, you should write code which does the following:
 - For each emotion label
     - Plot the relative frequency of each emotion across all seasons
 
-Finally, your repository should include a writtens summary and interpretation of what you think this analysis might being showing. You do not need to be a media studies expert here - just describe what you see and what that might mean in this context. EDIT: talk about trends in the data, possible limitations of our method, etc. Think analytically about what the results show
+Finally,  your repository should include a writtens summary and interpretation of what you think thisanalysis might being showing. You do not need to be a media studies expert here - just describe what you see and what that might mean in this context. EDIT: talk about trends in the data, possible limitations of our method, etc. Think analytically about what the results show
 
 
 ## Starter code and data
