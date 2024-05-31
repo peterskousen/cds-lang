@@ -38,9 +38,7 @@ def count_entities(doc):
     
     return entity_counts
 
-def process_sub_dir(sub_dir_path):
-
-    nlp = spacy.load("en_core_web_md")
+def process_sub_dir(sub_dir_path, nlp):
     framedata = []
 
     for txt in tqdm(sorted(os.listdir(sub_dir_path))):
@@ -82,23 +80,30 @@ def main():
     tracker = EmissionsTracker(project_name="feature extraction",
                             experiment_id="feature_extraction",
                             output_dir=output_path,
-                            output_file="feature_extraction_emissions.csv")
+                            output_file="feature_extraction_emissions.csv",
+                            log_level="error")
 
-    task_name = "Entire script"
+    task_name = "load model"
     print(f"Starting task: {task_name}")
     tracker.start_task(task_name)
+    nlp = spacy.load("en_core_web_md")
+    print(f"Stopping task: {task_name}")
+    tracker.stop_task(task_name)
 
+    task_name = "process directories"
+    print(f"Starting task: {task_name}")
+    tracker.start_task(task_name)
     input_dirs = sorted(os.listdir(input_path))
-    
     for sub_dir in input_dirs:
         sub_dir_path = os.path.join(input_path, sub_dir)
     
         print(f"Processing directory: {sub_dir}")
-        framedata = process_sub_dir(sub_dir_path)
+        framedata = process_sub_dir(sub_dir_path, nlp)
         out_path = os.path.join(output_path, f'annotations_{sub_dir}.csv')
         save_to_csv(framedata, out_path)
 
     print(f"Stopping task: {task_name}")
+    tracker.stop_task(task_name)
     tracker.stop()
 
 if __name__ == "__main__":
