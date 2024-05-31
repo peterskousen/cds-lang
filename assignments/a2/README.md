@@ -29,9 +29,6 @@ The `src` folder contains three scripts: `logistic_regression.py`, `mlp_classifi
 │   ├── MLP_classifier.joblib
 │   └── MLP_tfidf_vectorizer.joblib
 ├── out
-│   ├── emissions_base_0b43edb5-6759-4615-8d5b-0696d3b07353.csv
-│   ├── emissions_base_f905d2d2-44ef-41da-99a8-ffd038352607.csv
-│   ├── logistic_regression_emissions.csv
 │   ├── lrc_report.csv
 │   ├── mlp_emissions.csv
 │   └── mlp_report.csv
