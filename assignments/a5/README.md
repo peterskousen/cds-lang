@@ -116,8 +116,14 @@ bash run.sh
     ``` 
 
 ## Results
-By visualising the results of the CodeCarbon tracking, we can create a clear picture of the 
 
-- Which assignment generated the most emissions in terms of CO₂eq? Explain why this might be.
-- Which specific tasks generated the most emissions in terms of CO₂eq? Again, explain why this might be.
-- How robust do you think these results are and how/where might they be improved? 
+![total emissions](out/all_total_emissions.png)
+
+By visualising the results of the CodeCarbon tracking, we can create a clear picture of much energy each scripts consumes, and in turn how much CO₂eq they generated. It appears very evident that the by far highest ranked script is the one for assignment 4, the emotion analysis of *Game of Thrones*. The clear sinner in terms of the specific tasks conducted in this script is *predict labels*; Incidentally, this is also by far the most time consuming task of the bunch, as can be seen in the following plots:
+
+![a4 subtask emissions](out/a4_emotion_analysis_emissions/subtask_emissions.png)
+![a4 subtask durations](out/a4_emotion_analysis_emissions/subtask_durations.png)
+
+In general, for all scripts a clear correlation between the subtask duration and the subtask emissions can be observed. This is to be expected, as the measure of carbon emissions is the product of carbon intensity quantified as g of CO₂ emitted per kilowatt-hour of electricity and energy consumed quantified as kilowatt-hours as per the `CodeCarbon` [documentation](https://mlco2.github.io/codecarbon/methodology.html#carbon-intensity). It is important in this regard to note that the measurements produced by `CodeCarbon` are estimates and ought to be trated as such.
+
+However, this does not mean that meaningful information cannot be extracted from the data. We can regard the results as benchmarks with which we can compare the impact of code and different programming tasks. This is not only potentially useful for optimizing the code, but also speaks to the more significant insight that in terms of conducting data analysis, the most computationally expensive and ressourceful tasks are the ones concerned with machine learning, an important insight due to the fact that artificial intelligence based on extremely complex machine learning algorithms are hastily and steadily becoming more and more mainstream, not only for data analysis, but for entertainment and general purpose usecases. In an era where climate change poses significant challenges, these insights highlight the need for sustainable practices in technology development. By optimizing code and adopting energy-efficient algorithms, we can mitigate the environmental consequences of our digital activities and contribute to a more sustainable future.
